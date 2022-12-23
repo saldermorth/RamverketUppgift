@@ -25,11 +25,44 @@ namespace Assignment_A1_01.Services
             //Your code
 
 
+            var forecastSelctedInfo = wd.list.Select(e => new { wd.city, e.dt, e.main.temp, e.wind.speed, e.weather.First().description, e.weather.First().icon }).ToList();
+
+
+            List<ForecastItem> forecasts = new List<ForecastItem>();
+
+            forecasts.AddRange(forecastSelctedInfo.Select(x
+                 => new ForecastItem
+                 {
+                     DateTime = UnixTimeStampToDateTime(x.dt),
+                     Description = x.description,
+                     Icon = x.icon,
+                     Temperature = x.temp,
+                     WindSpeed = x.speed
+                 }));
+
+            List<Forecast> forecastList = new List<Forecast>();
+
+            forecastList.AddRange(forecastSelctedInfo.Select(x => new Forecast
+            {
+                City = x.city.ToString(),
+                Items = forecasts
+            }));
+
+
+
+
+            long unixTime = 1661870592;
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(unixTime);
+
+
+
             foreach (var item in wd.list)
             {
                 var foreCastItem = new ForecastItem
                 {
-                    Temperature = 1
+                    Temperature = item.main.temp,
+                    WindSpeed = item.wind.speed,
+
                 };
             }
 
