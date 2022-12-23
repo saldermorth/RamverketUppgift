@@ -1,13 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json; 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text.Json;
-
-using Assignment_A1_01.Models;
+﻿using Assignment_A1_01.Models;
+using System.Net.Http.Json;
 
 namespace Assignment_A1_01.Services
 {
@@ -16,7 +8,7 @@ namespace Assignment_A1_01.Services
         HttpClient httpClient = new HttpClient();
 
         // Your API Key
-        readonly string apiKey = ""; 
+        readonly string apiKey = "91b079387dd769b274c12e2c4e34320e";
 
         public async Task<Forecast> GetForecastAsync(double latitude, double longitude)
         {
@@ -31,6 +23,18 @@ namespace Assignment_A1_01.Services
 
             //Convert WeatherApiData to Forecast using Linq.
             //Your code
+
+
+            foreach (var item in wd.list)
+            {
+                var foreCastItem = new ForecastItem
+                {
+                    Temperature = 1
+                };
+            }
+
+
+
             var forecast = new Forecast(); //dummy to compile, replaced by your own code
             return forecast;
         }
