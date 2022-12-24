@@ -40,35 +40,17 @@ namespace Assignment_A1_01.Services
                      WindSpeed = x.speed
                  }));
 
-            List<Forecast> forecastList = new List<Forecast>();
 
-            forecastList.AddRange(forecastSelctedInfo.Select(x => new Forecast
+            Forecast forecast = new Forecast
             {
-                City = x.city.ToString(),
+                City = wd.city.name,
                 Items = forecasts
-            }));
-
-
-
+            };
 
             long unixTime = 1661870592;
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(unixTime);
 
 
-
-            foreach (var item in wd.list)
-            {
-                var foreCastItem = new ForecastItem
-                {
-                    Temperature = item.main.temp,
-                    WindSpeed = item.wind.speed,
-
-                };
-            }
-
-
-
-            var forecast = new Forecast(); //dummy to compile, replaced by your own code
             return forecast;
         }
         private DateTime UnixTimeStampToDateTime(double unixTimeStamp)

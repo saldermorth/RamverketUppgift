@@ -1,13 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json; 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text.Json;
-
-using Assignment_A1_01.Models;
+﻿using Assignment_A1_01.Models;
 using Assignment_A1_01.Services;
 
 namespace Assignment_A1_01
@@ -21,8 +12,14 @@ namespace Assignment_A1_01
 
             Forecast forecast = await new OpenWeatherService().GetForecastAsync(latitude, longitude);
 
+            forecast.Items.ToList().OrderBy(x => x.DateTime);
             //Your Code to present each forecast item in a grouped list
             Console.WriteLine($"Weather forecast for {forecast.City}");
+            Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
+            Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
+
+            forecast.Items.ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
         }
     }
 }
