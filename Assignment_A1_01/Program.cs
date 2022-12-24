@@ -20,6 +20,10 @@ namespace Assignment_A1_01
 
             forecast.Items.ForEach(x => Console.WriteLine(x));
             Console.WriteLine();
+
+            Console.WriteLine("STOP");
         }
+
+
     }
 }
