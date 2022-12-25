@@ -16,7 +16,7 @@ namespace Assignment_A1_01
             //Your Code to present each forecast item in a grouped list
             Console.WriteLine($"Weather forecast for {forecast.City}");
             Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
-            Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
+
 
             forecast.Items.ForEach(x => Console.WriteLine(x));
             Console.WriteLine();

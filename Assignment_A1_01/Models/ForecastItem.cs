@@ -10,14 +10,12 @@
 
         public override string ToString()
         {
-
-
             return string.Format("{0,-20}{1,-15}{2,-15}{3,-20}{4}",
-        DateTime.ToString("MM/dd/yyyy HH:mm"),
-        Temperature.ToString("0.00"),
-        WindSpeed.ToString("0.00"),
-        Description,
-        Icon);
+            DateTime.ToString("MM/dd/yyyy HH:mm"),
+            Temperature.ToString("0.00"),
+            WindSpeed.ToString("0.00"),
+            Description,
+            Icon);
         }
     }
 }
