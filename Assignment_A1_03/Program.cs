@@ -19,6 +19,7 @@ namespace Assignment_A1_03
 
             //Register the event
             //Your Code
+            service.WeatherForecastAvailable += OnCoordintesWeatherForecastAvailable;
 
             Task<Forecast>[] tasks = { null, null, null, null };
             Exception exception = null;
@@ -91,16 +92,17 @@ namespace Assignment_A1_03
             if (ForecastForCityRecived && ForecastForCoordinatesRecived)
             {
                 Console.WriteLine($"Weather forecast for {forecastCity.City}"); // Triggers twice
-                //Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
+                Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
                 forecastCity.Items.ForEach(x => Console.WriteLine(x));
 
-                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++");
+                Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
                 Console.WriteLine($"Weather forecast for {forecastCoordinates.City}");
-                //Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
+                Console.WriteLine("{0,-20}{1,-15}{2,-15}{3,-20}{4}", "DateTime", "Temperature", "WindSpeed", "Description", "Icon");
                 forecastCoordinates.Items.ForEach(x => Console.WriteLine(x));
 
-                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++");
+                Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
                 ForecastForCoordinatesRecived = false;
                 ForecastForCityRecived = false;
 

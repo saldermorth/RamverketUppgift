@@ -1,14 +1,8 @@
 ﻿//#define UseNewsApiSample  // Remove or undefine to use your own code to read live data
 
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json; 
-using System.Threading.Tasks;
-
 using Assignment_A2_02.Models;
-using Assignment_A2_02.ModelsSampleData;
+using System.Net;
+using System.Net.Http.Json;
 namespace Assignment_A2_02.Services
 {
     public class NewsService
@@ -16,7 +10,7 @@ namespace Assignment_A2_02.Services
         HttpClient httpClient = new HttpClient();
 
         // Your API Key
-        readonly string apiKey = "";
+        readonly string apiKey = "b563e91a171d4ebfa8a8ea256e155aeb";
 
         public NewsService()
         {
@@ -41,9 +35,27 @@ namespace Assignment_A2_02.Services
 
             //Convert Json to Object
             NewsApiData nd = await response.Content.ReadFromJsonAsync<NewsApiData>();
+
 #endif
-            
-            var news = new News(); //dummy to compile, replaced by your code
+            //Todo - Date time is now?
+            var NewsSelected = nd.Articles.Select(x => new { x.Title, x.Description, x.Url, x.UrlToImage });
+            List<NewsItem> ni = new();
+            ni.AddRange(NewsSelected.Select(x => new NewsItem
+            {
+                DateTime = DateTime.Now,
+                Title = x.Title,
+                Description = x.Description,
+                Url = x.Url,
+                UrlToImage = x.UrlToImage,
+
+            }));
+
+
+            var news = new News
+            {
+                Category = category,
+                Articles = ni
+            }; //dummy to compile, replaced by your code
             return news;
         }
     }

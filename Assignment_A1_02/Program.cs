@@ -7,8 +7,11 @@ namespace Assignment_A1_02
     {
         static bool ForecastForCityRecived = false;
         static bool ForecastForCoordinatesRecived = false;
+
         static Forecast forecastCity;
+
         static Forecast forecastCoordinates;
+
         static string UsersChoosenCity = "Miami";
 
 

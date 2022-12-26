@@ -84,7 +84,7 @@ namespace Assignment_A1_02.Services
                 Items = forecasts
             };
 
-            //dummy to compile, replaced by your own dummy code
+            //dummy code to compile, replaced by your own dummy code
 
             return forecast;
         }

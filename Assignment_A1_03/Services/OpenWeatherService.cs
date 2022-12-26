@@ -9,7 +9,12 @@ namespace Assignment_A1_03.Services
     public class OpenWeatherService
     {
         HttpClient httpClient = new HttpClient();
+        CacheItemPolicy policy = new CacheItemPolicy();
 
+        public OpenWeatherService()
+        {
+            policy.SlidingExpiration = TimeSpan.FromSeconds(61);
+        }
 
         //Cache declaration
         ConcurrentDictionary<(double, double, string), Forecast> cachedGeoForecasts = new ConcurrentDictionary<(double, double, string), Forecast>();
@@ -26,13 +31,34 @@ namespace Assignment_A1_03.Services
         {
             WeatherForecastAvailable?.Invoke(this, message);
         }
+
+        public event EventHandler<string> CachedWeatherForecastAvailable;
+        protected virtual void OnCachedWeatherForecastAvailable(string message)
+        {
+            CachedWeatherForecastAvailable?.Invoke(this, message);
+        }
+
+
         public async Task<Forecast> GetForecastAsync(string City)
         {
             //part of cache code here to check if forecast in Cache
             //generate an event that shows forecast was from cache
             //Your code
-            CacheItemPolicy policy = new CacheItemPolicy();
-            policy.SlidingExpiration = TimeSpan.FromSeconds(30);
+
+            var CachedForecast = MemoryCache.Default.Get("ForecastCity");
+            Console.WriteLine();
+            if (CachedForecast != null)
+            {
+                // invoke cache event 
+                Console.WriteLine("Cached value: " + CachedForecast);
+                CachedWeatherForecastAvailable?.Invoke(CachedForecast, "City Forecast Complete");
+                return (Forecast)CachedForecast;
+
+            }
+            else
+            {
+                Console.WriteLine("Value not found in cache.");
+            }
 
 
             //https://openweathermap.org/current
@@ -45,10 +71,9 @@ namespace Assignment_A1_03.Services
             //generate an event with different message if cached data
             //Your code
 
-            MemoryCache.Default.Add("Forecast", forecast, policy);
-
-            bool isCached = MemoryCache.Default.Contains("Forecast");
-            if (isCached) Console.WriteLine("Cached value found");
+            MemoryCache.Default.Add("ForecastCity", forecast, policy);
+            bool isCached = MemoryCache.Default.Contains("ForecastCity");
+            if (isCached) Console.WriteLine("Value Cached");
 
 
             WeatherForecastAvailable?.Invoke(forecast, "City Forecast Complete");
@@ -60,6 +85,23 @@ namespace Assignment_A1_03.Services
             //part of cache code here to check if forecast in Cache
             //generate an event that shows forecast was from cache
             //Your code
+            var CachedForecast = (Forecast)MemoryCache.Default.Get("ForecastCoor");
+
+            if (CachedForecast is not null)
+            {
+                // invoke cache event 
+                Console.WriteLine("Cached value: " + CachedForecast);
+
+                CachedWeatherForecastAvailable?.Invoke(CachedForecast, "City Forecast Complete");
+
+                return CachedForecast;
+            }
+            else
+            {
+                Console.WriteLine("Value not found in cache.");
+            }
+
+
 
             //https://openweathermap.org/current
             var language = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
@@ -70,17 +112,21 @@ namespace Assignment_A1_03.Services
             //part of event and cache code here
             //generate an event with different message if cached data
             //Your code
+            MemoryCache.Default.Add("ForecastCoor", forecast, policy);
+            bool isCached = MemoryCache.Default.Contains("ForecastCoor");
+            if (isCached) Console.WriteLine("Value Cached");
+
+
             WeatherForecastAvailable?.Invoke(forecast, "Coordinates Forecast Complete");
             return forecast;
         }
-        private async Task<Forecast> ReadWebApiAsync(string uri)
+        private async Task<Forecast> ReadWebApiAsync(string uri) //Todo here makes forcast items
         {
             //Read the response from the WebApi
             HttpResponseMessage response = await httpClient.GetAsync(uri);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-
                 throw new NonExistingCityException($"Status code indicates non 200 response");
             }
             WeatherApiData wd = await response.Content.ReadFromJsonAsync<WeatherApiData>();

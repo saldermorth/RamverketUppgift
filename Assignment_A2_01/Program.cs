@@ -7,6 +7,9 @@ namespace Assignment_A2_01
         static void Main(string[] args)
         {
             NewsService service = new();
+            var theNews = service.GetNewsAsync();
+            Console.WriteLine(theNews.Result.Articles.First().Title);
+
 
         }
     }
