@@ -9,7 +9,7 @@ namespace Assignment_A1_02
         static bool ForecastForCoordinatesRecived = false;
         static Forecast forecastCity;
         static Forecast forecastCoordinates;
-        static string UsersChoosenCity = "Miamiiii";
+        static string UsersChoosenCity = "Miami";
 
 
         static async Task Main(string[] args)
@@ -26,7 +26,7 @@ namespace Assignment_A1_02
 
 
             Task<Forecast>[] tasks = { null, null };
-            //Exception exception = null;
+            Exception exception = null;
             try
             {
                 double latitude = 59.5086798659495;
@@ -35,8 +35,6 @@ namespace Assignment_A1_02
                 //Create the two tasks and wait for comletion
                 tasks[0] = service.GetForecastAsync(latitude, longitude);
                 tasks[1] = service.GetForecastAsync(UsersChoosenCity); // Validation
-
-
 
 
                 Task.WaitAll(tasks[0], tasks[1]);
@@ -90,6 +88,7 @@ namespace Assignment_A1_02
         }
         public static void PrintForecasts()
         {
+            //Give color based on weather
             // Print Group by
             if (ForecastForCityRecived && ForecastForCoordinatesRecived)
             {

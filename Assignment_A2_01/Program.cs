@@ -1,7 +1,4 @@
-﻿using System;
-
-using Assignment_A2_01.Models;
-using Assignment_A2_01.Services;
+﻿using Assignment_A2_01.Services;
 
 namespace Assignment_A2_01
 {
@@ -9,6 +6,8 @@ namespace Assignment_A2_01
     {
         static void Main(string[] args)
         {
+            NewsService service = new();
+
         }
     }
 }

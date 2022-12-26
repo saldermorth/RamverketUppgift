@@ -1,23 +1,17 @@
 ﻿//#define UseNewsApiSample  // Remove or undefine to use your own code to read live data
 
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json; 
-using System.Threading.Tasks;
-using System.Collections.Generic;
-
 using Assignment_A2_01.Models;
-using Assignment_A2_01.ModelsSampleData;
+using System.Net;
+using System.Net.Http.Json;
 
 namespace Assignment_A2_01.Services
 {
     public class NewsService
     {
         HttpClient httpClient = new HttpClient();
- 
+
         // Your API Key
-        readonly string apiKey = "";
+        readonly string apiKey = "b563e91a171d4ebfa8a8ea256e155aeb";
 
         public NewsService()
         {
@@ -33,7 +27,7 @@ namespace Assignment_A2_01.Services
             NewsApiData nd = await NewsApiSampleData.GetNewsApiSampleAsync("sports");
 
 #else
-            var uri = $"https://newsapi.org/v2/top-headlines?country=se&category=sports"; 
+            var uri = $"https://newsapi.org/v2/top-headlines?country=se&category=sports";
 
             // make the http request
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, uri);
